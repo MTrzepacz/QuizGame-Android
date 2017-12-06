@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="mtrzepacz.quizgame">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/thinking_quiz"
+        android:label="Quiz"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+
+
+
+
+
+       android:theme="@style/AppTheme">
+
+        <activity android:name=".Start">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MathActivity"
+            android:parentActivityName=".Start"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Start" />
+        </activity>
+        <activity android:name=".ITActivity"
+            android:parentActivityName=".Start"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+           >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Start" />
+        </activity>
+        <activity android:name=".HistoryActivity"
+            android:parentActivityName=".Start"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Start" />
+            androi
+        </activity>
+    </application>
+
+</manifest>
