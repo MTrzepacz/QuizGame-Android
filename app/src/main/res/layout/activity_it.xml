@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,7 +32,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         android:layout_marginTop="34dp"
-        app:layout_constraintTop_toBottomOf="@+id/score" />
+        app:layout_constraintTop_toBottomOf="@+id/score"
+        android:gravity="center_horizontal" />
 
     <Button
         android:background="@drawable/customquizbutton"
@@ -90,7 +91,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/BestScoreView" />
+        app:layout_constraintTop_toBottomOf="@+id/BestScoreView"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:textColor="#FFFFFF"
@@ -104,7 +106,8 @@
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:textColor="#FFFFFF"
@@ -118,6 +121,7 @@
         app:layout_constraintHorizontal_bias="0.574"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerView" />
+        app:layout_constraintTop_toBottomOf="@+id/timerView"
+        android:gravity="center_horizontal" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

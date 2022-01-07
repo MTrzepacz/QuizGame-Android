@@ -1,6 +1,5 @@
 package mtrzepacz.quizgame;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,22 +7,16 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
-import android.preference.Preference;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class MathActivity extends AppCompatActivity {
