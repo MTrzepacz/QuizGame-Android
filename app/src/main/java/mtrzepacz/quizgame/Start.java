@@ -34,4 +34,9 @@ public class Start extends AppCompatActivity {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
+
+    public void chooseTopicList(View view){
+        Intent intent = new Intent(this, TopicList.class);
+        startActivity(intent);
+    }
 }
