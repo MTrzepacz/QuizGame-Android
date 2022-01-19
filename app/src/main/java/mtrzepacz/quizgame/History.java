@@ -1,7 +1,5 @@
 package mtrzepacz.quizgame;
 
-
-
 public class History {
     public String contentQuestionsHIS[] =
             {
@@ -35,53 +33,42 @@ public class History {
                     "Który z prezydentów USA był w Polsce dwukrotnie",
                     "Za panowania którego Cesarza spłonął Rzym?",
                     "Ile dni trwało Powstanie Warszawskie?"
-
-
-
-
-
-
-
-
             };
     private String answersHIS[][] =
             {
                     {"1366", "1426", "1410", "1000"},
                     {"Krzysztof \n Kolumb", "Pablo \n Pisasso", "Ferdynand \n Magellan", "Vasco \n da Gama"},
                     {"Kazimierz \n Odnowiciel", "Mieszko I", "Bolesław \n Chrobry", "Zygmunt \n III Waza"},
-                    {"1078","1029","1038","1112"},
-                    {"1452","1453","1498","1492"},
-                    {"Mieszko \n III Stary","Henryk \n Brodaty", "Przemysł II", "Konrad \n Mazowiecki"},
-                    {"Włochy","Hiszpania","Rumunia","Francja"},
+                    {"1078", "1029", "1038", "1112"},
+                    {"1452", "1453", "1498", "1492"},
+                    {"Mieszko \n III Stary", "Henryk \n Brodaty", "Przemysł II", "Konrad \n Mazowiecki"},
+                    {"Włochy", "Hiszpania", "Rumunia", "Francja"},
                     {"Nikola Tesla", "Thomas Edison", "Albert Einstein", "Sebastian Bach"},
-                    {"1900","1905","1903","1907"},
-                    {"1712","1836","1783","1812"},
-                    {"X","XIII","XV","XVI"},
-                    {"Winston Churchill","Harry Truman","Józef Stalin", "Królowa Elżbieta"},
-                    {"Majorka","Elba","Sycylia","Wyspa \n św Heleny"},
-                    {"Lech Wałęsa","Aleksander Kwaśniewski","Gabriel \n Narutowicz","Ignacy Mościcki"},
-                    {"Kowalem","Szewcem","Czołgistą","Kucharzem"},
-                    {"Janusz","Andrzej","Cezary","Tomasz"},
-                    {"4","6","7","9"},
-                    {"Włochy","Macedonia","brak informacji", "Egipt"},
-                    {"1991","1989","2003","1997"},
+                    {"1900", "1905", "1903", "1907"},
+                    {"1712", "1836", "1783", "1812"},
+                    {"X", "XIII", "XV", "XVI"},
+                    {"Winston Churchill", "Harry Truman", "Józef Stalin", "Królowa Elżbieta"},
+                    {"Majorka", "Elba", "Sycylia", "Wyspa \n św Heleny"},
+                    {"Lech Wałęsa", "Aleksander Kwaśniewski", "Gabriel \n Narutowicz", "Ignacy Mościcki"},
+                    {"Kowalem", "Szewcem", "Czołgistą", "Kucharzem"},
+                    {"Janusz", "Andrzej", "Cezary", "Tomasz"},
+                    {"4", "6", "7", "9"},
+                    {"Włochy", "Macedonia", "brak informacji", "Egipt"},
+                    {"1991", "1989", "2003", "1997"},
                     {"Alfred Nobel", "Nikola Tesla", "John Ericsson", "Victor Hugo"},
-                    {"1918","1904","1910","1917"},
-                    {"1904-1908","1914-1920","1914-1927","1914-1918"},
-                    {"Józef \n Piłsudski","Roman Dmowski","Edward \n Rydz-Smigły","Piotr Wysocki"},
-                    {"Argentyna","Brazylia","Meksyk","Urugwaj"},
-                    {"Polska", "Węgry", "Słowacja","Austria"},
-                    {"1999","2004","1994","2007"},
-                    {"Szwecja","Turcja","Rosja","Prusy"},
+                    {"1918", "1904", "1910", "1917"},
+                    {"1904-1908", "1914-1920", "1914-1927", "1914-1918"},
+                    {"Józef \n Piłsudski", "Roman Dmowski", "Edward \n Rydz-Smigły", "Piotr Wysocki"},
+                    {"Argentyna", "Brazylia", "Meksyk", "Urugwaj"},
+                    {"Polska", "Węgry", "Słowacja", "Austria"},
+                    {"1999", "2004", "1994", "2007"},
+                    {"Szwecja", "Turcja", "Rosja", "Prusy"},
                     {"Bill Clinton", "Ronald Reagan", "Richard Nixon", "John Carter"},
-                    {"Kaligula","Neron","Julisz Cezar","Klaudiusz"},
-                    {"65","63","60","58"}
-
-
-
+                    {"Kaligula", "Neron", "Julisz Cezar", "Klaudiusz"},
+                    {"65", "63", "60", "58"}
             };
 
-    private String correctAnswersHIS [] =
+    private String correctAnswersHIS[] =
             {
                     "1410",
                     "Krzysztof \n Kolumb",
@@ -113,46 +100,31 @@ public class History {
                     "Bill Clinton",
                     "Neron",
                     "63"
-
                     //30
-
             };
 
-    public String getQuestionHIS(int a)
-    {
-        String question = contentQuestionsHIS[a];
-        return question;
+    public String getQuestionHIS(int a) {
+        return contentQuestionsHIS[a];
     }
 
-    public String getChoice1(int a )
-    {
-        String choice = answersHIS[a][0];
-        return choice;
+    public String getChoice1(int a) {
+        return answersHIS[a][0];
     }
 
-    public String getChoice2(int a )
-    {
-        String choice = answersHIS[a][1];
-        return choice;
-    }
-    public String getChoice3(int a )
-    {
-        String choice = answersHIS[a][2];
-        return choice;
-    }
-    public String getChoice4(int a )
-    {
-        String choice = answersHIS[a][3];
-        return choice;
+    public String getChoice2(int a) {
+        return answersHIS[a][1];
     }
 
-    public String getCorrectAnswer(int a)
-    {
-        String answer = correctAnswersHIS[a];
-        return answer;
+    public String getChoice3(int a) {
+        return answersHIS[a][2];
     }
 
+    public String getChoice4(int a) {
+        return answersHIS[a][3];
+    }
 
-
+    public String getCorrectAnswer(int a) {
+        return correctAnswersHIS[a];
+    }
 }
 
