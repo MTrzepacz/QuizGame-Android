@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +19,16 @@ import mtrzepacz.quizgame.database.TopicDto;
 
 public class TopicList extends AppCompatActivity {
 
+    //view
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private Button addNewItemButton;
+    private EditText topicNameEditText;
+
+
     private List<String> testList;
 
+    //database
     private Cursor topicCursor;
     private DbAdapter dbAdapter;
 
@@ -32,6 +38,7 @@ public class TopicList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.topic_list);
         addNewItemButton = findViewById(R.id.addNewItemButton);
+        topicNameEditText = findViewById(R.id.topicNameEditText);
         listView = (ListView) findViewById(R.id.ListView1);
         testList = new ArrayList<>();
         loadTopics();
@@ -48,7 +55,7 @@ public class TopicList extends AppCompatActivity {
         addNewItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                testList.add("NEW VALUE");
+                testList.add(topicNameEditText.getText().toString());
                 adapter.notifyDataSetChanged();
             }
         });

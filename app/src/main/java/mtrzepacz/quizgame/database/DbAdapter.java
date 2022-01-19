@@ -15,6 +15,7 @@ import static mtrzepacz.quizgame.database.ItTableConstants.DROP_IT_TABLE;
 import static mtrzepacz.quizgame.database.MathTableConstants.DB_CREATE_MATH_TABLE;
 import static mtrzepacz.quizgame.database.MathTableConstants.DROP_MATH_TABLE;
 import static mtrzepacz.quizgame.database.StartingTopicsConstants.DB_CREATE_TOPIC_TABLE;
+import static mtrzepacz.quizgame.database.StartingTopicsConstants.DROP_TOPIC_TABLE;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -23,8 +24,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import java.util.Arrays;
 
 import mtrzepacz.quizgame.History;
 import mtrzepacz.quizgame.IT;
@@ -53,7 +52,7 @@ public class DbAdapter {
             db.execSQL(DB_CREATE_TOPIC_TABLE);
             populateHistoryQuestions(db);
             populateItQuestions(db);
-            populateMathQusetions(db);
+            populateMathQuestions(db);
             populateStartingTopics(db);
             Log.d(DEBUG_TAG, "Database creating...");
             Log.d(DEBUG_TAG, "Table " + DB_HISTORY_TABLE + " ver." + DB_VERSION + " created");
@@ -73,7 +72,7 @@ public class DbAdapter {
             db.insert(StartingTopicsConstants.DB_TOPIC_TABLE, null, history);
         }
 
-        private void populateMathQusetions(SQLiteDatabase db) {
+        private void populateMathQuestions(SQLiteDatabase db) {
             MathQuestions math = new MathQuestions();
             for (int i = 0; i < 30; i++) {
                 ContentValues values = new ContentValues();
@@ -106,6 +105,7 @@ public class DbAdapter {
             db.execSQL(DROP_HISTORY_TABLE);
             db.execSQL(DROP_IT_TABLE);
             db.execSQL(DROP_MATH_TABLE);
+            db.execSQL(DROP_TOPIC_TABLE);
             Log.d(DEBUG_TAG, "Database updating...");
             Log.d(DEBUG_TAG, "Table " + DB_HISTORY_TABLE + " updated from ver." + oldVersion + " to ver." + newVersion);
             Log.d(DEBUG_TAG, "All data is lost.");
