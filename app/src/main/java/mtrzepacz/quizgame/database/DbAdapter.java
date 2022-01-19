@@ -14,6 +14,7 @@ import static mtrzepacz.quizgame.database.ItTableConstants.DB_CREATE_IT_TABLE;
 import static mtrzepacz.quizgame.database.ItTableConstants.DROP_IT_TABLE;
 import static mtrzepacz.quizgame.database.MathTableConstants.DB_CREATE_MATH_TABLE;
 import static mtrzepacz.quizgame.database.MathTableConstants.DROP_MATH_TABLE;
+import static mtrzepacz.quizgame.database.StartingTopicsConstants.DB_CREATE_TOPIC_TABLE;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -31,7 +32,7 @@ import mtrzepacz.quizgame.MathQuestions;
 
 public class DbAdapter {
     private static final String DEBUG_TAG = "SqLiteTodoManager";
-    private static final int DB_VERSION = 7;
+    private static final int DB_VERSION = 8;
     private static final String DB_NAME = "database.db";
 
     private SQLiteDatabase db;
@@ -49,11 +50,27 @@ public class DbAdapter {
             db.execSQL(DB_CREATE_HISTORY_TABLE);
             db.execSQL(DB_CREATE_IT_TABLE);
             db.execSQL(DB_CREATE_MATH_TABLE);
+            db.execSQL(DB_CREATE_TOPIC_TABLE);
             populateHistoryQuestions(db);
             populateItQuestions(db);
             populateMathQusetions(db);
+            populateStartingTopics(db);
             Log.d(DEBUG_TAG, "Database creating...");
             Log.d(DEBUG_TAG, "Table " + DB_HISTORY_TABLE + " ver." + DB_VERSION + " created");
+        }
+
+        private void populateStartingTopics(SQLiteDatabase db) {
+            ContentValues math = new ContentValues();
+            math.put(StartingTopicsConstants.KEY_NAME, "Math");
+            db.insert(StartingTopicsConstants.DB_TOPIC_TABLE, null, math);
+
+            ContentValues it = new ContentValues();
+            it.put(StartingTopicsConstants.KEY_NAME, "It");
+            db.insert(StartingTopicsConstants.DB_TOPIC_TABLE, null, it);
+
+            ContentValues history = new ContentValues();
+            history.put(StartingTopicsConstants.KEY_NAME, "History");
+            db.insert(StartingTopicsConstants.DB_TOPIC_TABLE, null, history);
         }
 
         private void populateMathQusetions(SQLiteDatabase db) {
@@ -142,5 +159,10 @@ public class DbAdapter {
     public Cursor getAllMathQuestions() {
         String[] columns = {MathTableConstants.MATH_KEY_ID, KEY_QUESTION,KEY_ANSWER_1 ,KEY_ANSWER_2,KEY_ANSWER_3,KEY_ANSWER_4,KEY_CORRECT_ANSWER};
         return db.query(MathTableConstants.DB_MATH_TABLE, columns, null, null, null, null, null);
+    }
+
+    public Cursor getAllTopics(){
+        String[] columns = { StartingTopicsConstants.TOPIC_KEY_ID, StartingTopicsConstants.KEY_NAME };
+        return db.query(StartingTopicsConstants.DB_TOPIC_TABLE, columns, null, null, null, null, null);
     }
 }
