@@ -36,8 +36,8 @@ public class HistoryActivity extends AppCompatActivity {
     private History mQuestions = new History();
 
     //Set<Integer> powtorki = new HashSet<>();
-    private int mScore = 0;
-    private String mAnswer;
+    private int currentScore = 0;
+    private String correctAnswer;
     private int Counter = 60;
     private int mQuestionslenght = mQuestions.contentQuestionsHIS.length;
     Integer highScoreINT;
@@ -91,13 +91,11 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //  this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_history);
-        setTitle("History Questions");
+        setTitle("Historia");
         loadQuestionData();
         r = new Random();
         questionNumber = r.nextInt(mQuestionslenght);
-        //powtorki.add(QuestionNumber);
         answer1 = (Button) findViewById(R.id.answer1);
         answer2 = (Button) findViewById(R.id.answer2);
         answer3 = (Button) findViewById(R.id.answer3);
@@ -106,7 +104,7 @@ public class HistoryActivity extends AppCompatActivity {
         questionView = (TextView) findViewById(R.id.QuestionView);
         BestScoreView = (TextView) findViewById(R.id.BestScoreView);
         score = (TextView) findViewById(R.id.score);
-        score.setText("Wynik : " + mScore);
+        score.setText("Wynik : " + currentScore);
         updateQuestion(questionNumber);
 
         timer = (TextView) findViewById(R.id.timerView);
@@ -133,17 +131,16 @@ public class HistoryActivity extends AppCompatActivity {
         answer3.setText(questions.get(num).getAnswer3());
         answer4.setText(questions.get(num).getAnswer4());
 
-        mAnswer = questions.get(num).getCorrectAnswer();
+        correctAnswer = questions.get(num).getCorrectAnswer();
     }
 
     private void checkHighScore() {
         SharedPreferences settings = getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
         highScoreINT = settings.getInt("HIGH_SCORE_HIS", 0);
-        if (mScore > highScoreINT) {
-            BestScoreView.setText("Najlepszy wynik : " + mScore);
-
+        if (currentScore > highScoreINT) {
+            BestScoreView.setText("Najlepszy wynik : " + currentScore);
             SharedPreferences.Editor editor = settings.edit();
-            editor.putInt("HIGH_SCORE_HIS", mScore);
+            editor.putInt("HIGH_SCORE_HIS", currentScore);
             editor.commit();
         } else {
             BestScoreView.setText("Najlepszy  wynik : " + highScoreINT);
@@ -154,7 +151,7 @@ public class HistoryActivity extends AppCompatActivity {
     private void gameOver() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HistoryActivity.this);
         alertDialogBuilder
-                .setMessage("Błędna odpowiedź! Twój wynik to " + mScore + " punktów.")
+                .setMessage("Błędna odpowiedź! Twój wynik to " + currentScore + " punktów.")
                 .setCancelable(false)
                 .setPositiveButton("NEW GAME",
                         new DialogInterface.OnClickListener() {
@@ -210,15 +207,12 @@ public class HistoryActivity extends AppCompatActivity {
         questionView = (TextView) findViewById(R.id.QuestionView);
         score = (TextView) findViewById(R.id.score);
         BestScoreView = (TextView) findViewById(R.id.BestScoreView);
-        score.setText("Wynik : " + mScore);
+        score.setText("Wynik : " + currentScore);
         updateQuestion(help);
 
         timer = (TextView) findViewById(R.id.timerView);
 
         checkHighScore();
-        // CDTimer.start();
-        //timer.setText(String.valueOf(Counter));
-
     }
 
     public void saveQuestion() {
@@ -232,7 +226,7 @@ public class HistoryActivity extends AppCompatActivity {
         answer1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (equalsIgnoreCase(answer1.getText(),mAnswer)) {
+                if (equalsIgnoreCase(answer1.getText(), correctAnswer)) {
                     goodanswer();
                 } else {
                     playWrongSound();
@@ -244,7 +238,7 @@ public class HistoryActivity extends AppCompatActivity {
         answer2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (equalsIgnoreCase(answer2.getText(),mAnswer)) {
+                if (equalsIgnoreCase(answer2.getText(), correctAnswer)) {
                     goodanswer();
                 } else {
                     playWrongSound();
@@ -256,7 +250,7 @@ public class HistoryActivity extends AppCompatActivity {
         answer3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (equalsIgnoreCase(answer3.getText(),mAnswer)) {
+                if (equalsIgnoreCase(answer3.getText(), correctAnswer)) {
                     goodanswer();
                 } else {
                     playWrongSound();
@@ -268,7 +262,7 @@ public class HistoryActivity extends AppCompatActivity {
         answer4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (equalsIgnoreCase(answer4.getText(),mAnswer)) {
+                if (equalsIgnoreCase(answer4.getText(), correctAnswer)) {
                     goodanswer();
                 } else {
                     playWrongSound();
@@ -279,57 +273,14 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void goodanswer() {
-        mScore = mScore + Counter;
+        currentScore = currentScore + Counter;
         checkHighScore();
         playCorrectSound();
-        score.setText("Wynik " + mScore);
+        score.setText("Wynik " + currentScore);
         Counter = 60;
         questionNumber = r.nextInt(mQuestionslenght);
-       /* while (powtorki.contains(QuestionNumber))
-        {
-            QuestionNumber = r.nextInt(mQuestionslenght);
-        } */
         updateQuestion(questionNumber);
-        //   powtorki.add(QuestionNumber);
         saveQuestion();
-      /*  if(powtorki.size() == mQuestions.contentQuestionsHIS.length)
-        {
-            AlertDialog.Builder alertDialogBuilder = new    AlertDialog.Builder(HistoryActivity.this);
-            alertDialogBuilder
-                    .setMessage("Koniec pytań, twój końcowy wynik to " + mScore + " punktów, gratulacje!")
-                    .setCancelable(false)
-                    .setPositiveButton("NEW GAME",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i )
-                                {
-                                    finish();
-                                    Intent intent = new Intent(getApplicationContext(), Start.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                    //  startActivity(new Intent(getApplicationContext(),Start.class));
-                                }
-                            })
-                    .setNegativeButton("EXIT",
-                            new DialogInterface.OnClickListener(){
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i)
-                                {
-
-                                    finish();
-                                    Intent intent = new Intent(getApplicationContext(), Start.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    intent.putExtra("EXIT", true);
-                                    startActivity(intent);
-
-                                }
-                            });
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-
-            Counter = -1;
-            timer.setText("KONIEC GRY");
-        } */
     }
 
     private void loadQuestionData() {

@@ -2,7 +2,7 @@ package mtrzepacz.quizgame.database;
 
 public class MathTableConstants {
 
-    public static final String DB_MATH_TABLE = "Math";
+    public static final String DB_MATH_TABLE = "Matematyka";
     public static final String MATH_KEY_ID = "_id";
     public static final String MATH_KEY_ID_OPTIONS = "INTEGER PRIMARY KEY AUTOINCREMENT";
     public static final int ID_COLUMN = 0;

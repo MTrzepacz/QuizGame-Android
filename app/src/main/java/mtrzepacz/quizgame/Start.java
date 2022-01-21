@@ -6,16 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import mtrzepacz.quizgame.database.DbAdapter;
+
 public class Start extends AppCompatActivity {
+
+    DbAdapter dbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        dbAdapter = new DbAdapter(getApplicationContext());
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
         }
-
     }
     public void chooseMath(View view)
     {

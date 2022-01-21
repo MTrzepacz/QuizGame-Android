@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/neo_menu"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:background="@drawable/customquizbutton"
+        android:text="Graj!"
+        app:layout_constraintBottom_toTopOf="@+id/addNewQuestionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryTextView"
+        app:layout_constraintVertical_bias="0.455" />
+
+    <Button
+        android:id="@+id/addNewQuestionButton"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="256dp"
+        android:background="@drawable/customquizbutton"
+        android:text="Dodaj nowe pytanie"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/categoryTextView"
+        android:layout_width="143dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="56dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

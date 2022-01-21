@@ -2,7 +2,7 @@ package mtrzepacz.quizgame.database;
 
 public class HistoryTableConstants {
 
-    public static final String DB_HISTORY_TABLE = "History";
+    public static final String DB_HISTORY_TABLE = "Historia";
     public static final String HISTORY_KEY_ID = "_id";
     public static final String HISTORY_KEY_ID_OPTIONS = "INTEGER PRIMARY KEY AUTOINCREMENT";
     public static final int ID_COLUMN = 0;

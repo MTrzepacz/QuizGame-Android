@@ -5,15 +5,10 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/thinking_quiz"
-        android:label="Quiz"
+        android:label="Twoj Quiz"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
-
-
-
-
-       android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme">
 
         <activity android:name=".Start">
             <intent-filter>
@@ -21,36 +16,64 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MathActivity"
-            android:parentActivityName=".Start"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+        <activity
+            android:name=".MathActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".Start">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Start" />
         </activity>
-        <activity android:name=".ITActivity"
-            android:parentActivityName=".Start"
+        <activity
+            android:name=".ITActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-           >
+            android:parentActivityName=".Start">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Start" />
         </activity>
-        <activity android:name=".HistoryActivity"
-            android:parentActivityName=".Start"
+        <activity
+            android:name=".HistoryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            >
+            android:parentActivityName=".Start">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Start" />
         </activity>
-        <activity android:name=".TopicList"
-            android:parentActivityName=".Start"
+        <activity
+            android:name=".TopicList"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            >
+            android:parentActivityName=".Start">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Start" />
+        </activity>
+        <activity
+            android:name=".PlayOrAddNewQuestionActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".TopicList">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Start" />
+        </activity>
+        <activity
+            android:name=".AddNewQuestionActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".PlayOrAddNewQuestionActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Start" />
+        </activity>
+        <activity
+            android:name=".CustomCategoryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".PlayOrAddNewQuestionActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

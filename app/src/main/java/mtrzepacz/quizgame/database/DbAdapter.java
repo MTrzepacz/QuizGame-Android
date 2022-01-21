@@ -15,7 +15,9 @@ import static mtrzepacz.quizgame.database.ItTableConstants.DROP_IT_TABLE;
 import static mtrzepacz.quizgame.database.MathTableConstants.DB_CREATE_MATH_TABLE;
 import static mtrzepacz.quizgame.database.MathTableConstants.DROP_MATH_TABLE;
 import static mtrzepacz.quizgame.database.StartingTopicsConstants.DB_CREATE_TOPIC_TABLE;
+import static mtrzepacz.quizgame.database.StartingTopicsConstants.DB_TOPIC_TABLE;
 import static mtrzepacz.quizgame.database.StartingTopicsConstants.DROP_TOPIC_TABLE;
+import static mtrzepacz.quizgame.database.StartingTopicsConstants.KEY_TOPIC_NAME;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,13 +27,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mtrzepacz.quizgame.History;
 import mtrzepacz.quizgame.IT;
 import mtrzepacz.quizgame.MathQuestions;
 
 public class DbAdapter {
     private static final String DEBUG_TAG = "SqLiteTodoManager";
-    private static final int DB_VERSION = 8;
+    private static final int DB_VERSION = 11;
     private static final String DB_NAME = "database.db";
 
     private SQLiteDatabase db;
@@ -60,15 +65,15 @@ public class DbAdapter {
 
         private void populateStartingTopics(SQLiteDatabase db) {
             ContentValues math = new ContentValues();
-            math.put(StartingTopicsConstants.KEY_NAME, "Math");
+            math.put(KEY_TOPIC_NAME, "Matematyka");
             db.insert(StartingTopicsConstants.DB_TOPIC_TABLE, null, math);
 
             ContentValues it = new ContentValues();
-            it.put(StartingTopicsConstants.KEY_NAME, "It");
+            it.put(KEY_TOPIC_NAME, "Informatyka");
             db.insert(StartingTopicsConstants.DB_TOPIC_TABLE, null, it);
 
             ContentValues history = new ContentValues();
-            history.put(StartingTopicsConstants.KEY_NAME, "History");
+            history.put(KEY_TOPIC_NAME, "Historia");
             db.insert(StartingTopicsConstants.DB_TOPIC_TABLE, null, history);
         }
 
@@ -105,6 +110,23 @@ public class DbAdapter {
             db.execSQL(DROP_HISTORY_TABLE);
             db.execSQL(DROP_IT_TABLE);
             db.execSQL(DROP_MATH_TABLE);
+
+            //get other categories
+            Cursor cursor = getAllTopics(db);
+            List<String> topicList = new ArrayList<>();
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    //long id = topicCursor.getLong(StartingTopicsConstants.ID_COLUMN);
+                    String topicName = cursor.getString(StartingTopicsConstants.TOPIC_NAME_COLUMN);
+                    topicList.add(topicName);
+
+                } while (cursor.moveToNext());
+            }
+            //cleanup other categories
+            for( int i = 0 ; i < topicList.size() ; i++){
+                CustomCategory c = new CustomCategory(topicList.get(i));
+                db.execSQL(c.getDeleteTableQuery());
+            }
             db.execSQL(DROP_TOPIC_TABLE);
             Log.d(DEBUG_TAG, "Database updating...");
             Log.d(DEBUG_TAG, "Table " + DB_HISTORY_TABLE + " updated from ver." + oldVersion + " to ver." + newVersion);
@@ -126,6 +148,11 @@ public class DbAdapter {
                 db.insert(DB_HISTORY_TABLE, null, values);
             }
         }
+
+        public Cursor getAllTopics(SQLiteDatabase db){
+            String[] columns = { StartingTopicsConstants.TOPIC_KEY_ID, KEY_TOPIC_NAME};
+            return db.query(StartingTopicsConstants.DB_TOPIC_TABLE, columns, null, null, null, null, null);
+        }
     }
 
     public DbAdapter(Context context) {
@@ -146,6 +173,43 @@ public class DbAdapter {
         dbHelper.close();
     }
 
+    public void addNewCategory(String category){
+        ContentValues newCategory = new ContentValues();
+        newCategory.put(KEY_TOPIC_NAME,category);
+
+        CustomCategory customCategory = new CustomCategory(category);
+
+        db.execSQL(customCategory.getCreateTableQuery());
+        db.insert(DB_TOPIC_TABLE, null, newCategory);
+    }
+
+    public void addCustomQuestion(String category, QuestionDbo questionDbo){
+        ContentValues question = new ContentValues();
+        question.put(KEY_QUESTION,questionDbo.getQuestion());
+        question.put(KEY_ANSWER_1,questionDbo.getAnswer1());
+        question.put(KEY_ANSWER_2,questionDbo.getAnswer2());
+        question.put(KEY_ANSWER_3,questionDbo.getAnswer3());
+        question.put(KEY_ANSWER_4,questionDbo.getAnswer4());
+        question.put(KEY_CORRECT_ANSWER,questionDbo.getCorrectAnswer());
+
+        db.insert(category, null, question);
+    }
+
+    public Cursor getAllCustomQuestions(String category){
+        CustomCategory customCategory = new CustomCategory(category);
+
+        String[] columns = {
+                CustomCategory.KEY_ID,
+                CustomCategory.KEY_QUESTION,
+                CustomCategory.KEY_ANSWER_1,
+                CustomCategory.KEY_ANSWER_2,
+                CustomCategory.KEY_ANSWER_3,
+                CustomCategory.KEY_ANSWER_4,
+                CustomCategory.KEY_CORRECT_ANSWER};
+
+        return db.query(customCategory.getCategoryName(), columns, null, null, null, null, null);
+    }
+
     public Cursor getAllHistoryQuestions() {
         String[] columns = {HISTORY_KEY_ID, KEY_QUESTION,KEY_ANSWER_1 ,KEY_ANSWER_2,KEY_ANSWER_3,KEY_ANSWER_4,KEY_CORRECT_ANSWER};
         return db.query(DB_HISTORY_TABLE, columns, null, null, null, null, null);
@@ -162,7 +226,7 @@ public class DbAdapter {
     }
 
     public Cursor getAllTopics(){
-        String[] columns = { StartingTopicsConstants.TOPIC_KEY_ID, StartingTopicsConstants.KEY_NAME };
+        String[] columns = { StartingTopicsConstants.TOPIC_KEY_ID, KEY_TOPIC_NAME};
         return db.query(StartingTopicsConstants.DB_TOPIC_TABLE, columns, null, null, null, null, null);
     }
 }

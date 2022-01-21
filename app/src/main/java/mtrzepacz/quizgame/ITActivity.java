@@ -61,14 +61,12 @@ public class ITActivity extends AppCompatActivity {
             if (Counter == 0) {
                 onFinish();
             }
-
         }
 
         public void onFinish() {
             timer.setText(" KONIEC CZASU ");
             cancel();
             gameOver();
-
         }
     };
 
@@ -92,12 +90,11 @@ public class ITActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_it);
-        setTitle("IT Questions");
+        setTitle("Informatyka");
         loadmusic();
         loadQuestionData();
         r = new Random();
         QuestionNumber = r.nextInt(mQuestionslenght);
-        //powtorki.add(QuestionNumber);
         answer1 = (Button) findViewById(R.id.answer1);
         answer2 = (Button) findViewById(R.id.answer2);
         answer3 = (Button) findViewById(R.id.answer3);
@@ -145,7 +142,6 @@ public class ITActivity extends AppCompatActivity {
     }
 
     private void gameOver() {
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ITActivity.this);
         alertDialogBuilder
                 .setMessage("Błędna odpowiedź! Twój wynik to " + mScore + " punktów.")
@@ -154,32 +150,21 @@ public class ITActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
                                 Intent intent = new Intent(getApplicationContext(), Start.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 finish();
                                 System.gc();
-                                //  onDestroy();
-
-
-                                //   startActivity(intent);
-
-                                // startActivity(new Intent(getApplicationContext(),Start.class));
                             }
                         })
                 .setNegativeButton("EXIT",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
-
                                 Intent intent = new Intent(getApplicationContext(), Start.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("EXIT", true);
                                 finish();
                                 startActivity(intent);
-
-
                             }
                         });
         // playWrongSound();
@@ -309,7 +294,6 @@ public class ITActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), Start.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
-                                    //  startActivity(new Intent(getApplicationContext(),Start.class));
                                 }
                             })
                     .setNegativeButton("EXIT",

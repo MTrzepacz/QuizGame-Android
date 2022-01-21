@@ -106,8 +106,7 @@ public class IT {
             };
 
     public String getQuestionIT(int a) {
-        String question = contentQuestionsIT[a];
-        return question;
+        return contentQuestionsIT[a];
     }
 
     public String getChoice1(int a) {

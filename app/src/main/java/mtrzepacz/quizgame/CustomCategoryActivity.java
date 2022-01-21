@@ -9,112 +9,121 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.media.MediaPlayer;
-import android.os.CountDownTimer;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import mtrzepacz.quizgame.database.DbAdapter;
 import mtrzepacz.quizgame.database.HistoryTableConstants;
 import mtrzepacz.quizgame.database.QuestionDbo;
 
-
-public class MathActivity extends AppCompatActivity {
+public class CustomCategoryActivity extends AppCompatActivity {
 
     Button answer1, answer2, answer3, answer4;
 
     TextView questionView, score, timer, BestScoreView;
 
-    private MathQuestions mQuestions = new MathQuestions();
+    Set<Integer> powtorki = new HashSet<>();
 
-    //  Set<Integer> powtorki = new HashSet<>();
-    private int mScore = 0;
-    private String mAnswer;
+    private int currentScore = 0;
+    private String goodAnswer;
     private int Counter = 60;
-    private int mQuestionslenght = mQuestions.contentQuestionsMath.length;
-    Integer highScoreINT;
+    private int questionNumberCount = 0;
+    private Integer highScoreINT;
     int QuestionNumber;
+    private String categoryName;
 
+    //sound and randomizing questions
     MediaPlayer mplayerGood;
     MediaPlayer mplayerWrong;
     Random r;
 
     //db setup
     private DbAdapter dbAdapter;
-    private Cursor MathCursor;
+    private Cursor cursor;
     private List<QuestionDbo> questions = new ArrayList<>();
 
     CountDownTimer CDTimer = new CountDownTimer(90000, 1000) {
-        public void onTick(long milisUnitilFinished) {
+        public void onTick(long milisUntilFinished) {
             if (Counter > -1)
                 timer.setText(String.valueOf(Counter));
             Counter--;
-            if (Counter == -1) {
+            if (Counter == 0) {
                 onFinish();
             }
         }
-
         public void onFinish() {
+            timer.setText(" KONIEC CZASU ");
             cancel();
-            //playWrongSound();
             gameOver();
         }
     };
-
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.activity_math);
+            setContentView(R.layout.activity_it);
             LayoutControl();
             onClickListeners();
         } else {
-            setContentView(R.layout.activity_math);
+            setContentView(R.layout.activity_it);
             LayoutControl();
             onClickListeners();
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_math);
-        setTitle("Matematyka");
-        r = new Random();
+        //todo set layout for custom activity
+        setContentView(R.layout.custom_category);
+
+        Intent contentIntent = getIntent();
+        categoryName = contentIntent.getStringExtra("categoryName");
+        setTitle(categoryName + " Questions");
+
         loadmusic();
         loadQuestionData();
-        QuestionNumber = r.nextInt(mQuestionslenght);
-        //powtorki.add(QuestionNumber);
-        answer1 = (Button) findViewById(R.id.answer1);
-        answer2 = (Button) findViewById(R.id.answer2);
-        answer3 = (Button) findViewById(R.id.answer3);
-        answer4 = (Button) findViewById(R.id.answer4);
+       // checkIfCategoryContainsQuestions();
 
-        questionView = (TextView) findViewById(R.id.QuestionView);
-        score = (TextView) findViewById(R.id.score);
-        BestScoreView = (TextView) findViewById(R.id.BestScoreView);
-        score.setText("Wynik : " + mScore);
-        updateQuestion(QuestionNumber);
+        if(questionNumberCount <= 0){
+            checkIfCategoryContainsQuestions();
+        } else {
+            r = new Random();
+            QuestionNumber = r.nextInt(questionNumberCount);
 
-        timer = (TextView) findViewById(R.id.timerView);
+            answer1 = (Button) findViewById(R.id.answer1);
+            answer2 = (Button) findViewById(R.id.answer2);
+            answer3 = (Button) findViewById(R.id.answer3);
+            answer4 = (Button) findViewById(R.id.answer4);
 
-        checkHighScore();
-        CDTimer.start();
-        timer.setText(String.valueOf(Counter));
+            questionView = (TextView) findViewById(R.id.QuestionView);
+            BestScoreView = (TextView) findViewById(R.id.BestScoreView);
+            score = (TextView) findViewById(R.id.score);
+            score.setText("Wynik : " + currentScore);
+            updateQuestion(QuestionNumber);
 
-        saveQuestion();
-        onClickListeners();
+            timer = (TextView) findViewById(R.id.timerView);
+
+            checkHighScore();
+            CDTimer.start();
+            timer.setText(String.valueOf(Counter));
+
+            saveQuestion();
+            onClickListeners();
+        }
     }
 
     private void updateQuestion(int num) {
@@ -124,61 +133,61 @@ public class MathActivity extends AppCompatActivity {
         answer3.setText(questions.get(num).getAnswer3());
         answer4.setText(questions.get(num).getAnswer4());
 
-        mAnswer = questions.get(num).getCorrectAnswer();
+        goodAnswer = questions.get(num).getCorrectAnswer();
     }
 
     private void checkHighScore() {
         SharedPreferences settings = getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
-        highScoreINT = settings.getInt("HIGH_SCORE_MATH", 0);
-        if (mScore > highScoreINT) {
-            BestScoreView.setText("Najlepszy wynik : " + mScore);
+        highScoreINT = settings.getInt("HIGH_SCORE " + categoryName, 0);
+        if (currentScore > highScoreINT) {
+            BestScoreView.setText("Najlepszy wynik : " + currentScore);
 
             SharedPreferences.Editor editor = settings.edit();
-            editor.putInt("HIGH_SCORE_MATH", mScore);
+            editor.putInt("HIGH_SCORE " + categoryName, currentScore);
             editor.commit();
         } else {
             BestScoreView.setText("Najlepszy wynik : " + highScoreINT);
         }
-
     }
 
     private void gameOver() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MathActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CustomCategoryActivity.this);
         alertDialogBuilder
-                .setMessage("Błędna odpowiedź! Twój wynik to " + mScore + " punktów.")
+                .setMessage("Błędna odpowiedź! Twój wynik to " + currentScore + " punktów.")
                 .setCancelable(false)
                 .setPositiveButton("NEW GAME",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
                                 Intent intent = new Intent(getApplicationContext(), Start.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                //  startActivity(new Intent(getApplicationContext(),Start.class));
+                                finish();
+                                System.gc();
+                                //  onDestroy();
+
+
+                                //   startActivity(intent);
+
+                                // startActivity(new Intent(getApplicationContext(),Start.class));
                             }
                         })
                 .setNegativeButton("EXIT",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
-                                finish();
                                 Intent intent = new Intent(getApplicationContext(), Start.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("EXIT", true);
+                                finish();
                                 startActivity(intent);
-                                Counter = -1;
-
                             }
                         });
+        // playWrongSound();
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
         Counter = -1;
         timer.setText("KONIEC GRY");
     }
-
 
     private void playCorrectSound() {
         mplayerGood.start();
@@ -186,11 +195,6 @@ public class MathActivity extends AppCompatActivity {
 
     private void playWrongSound() {
         mplayerWrong.start();
-    }
-
-    private void loadmusic() {
-        mplayerGood = new MediaPlayer().create(getApplication(), R.raw.goodanswer);
-        mplayerWrong = new MediaPlayer().create(getApplication(), R.raw.wronganswer);
     }
 
     public void LayoutControl() {
@@ -206,21 +210,34 @@ public class MathActivity extends AppCompatActivity {
         questionView = (TextView) findViewById(R.id.QuestionView);
         score = (TextView) findViewById(R.id.score);
         BestScoreView = (TextView) findViewById(R.id.BestScoreView);
-        score.setText("Wynik : " + mScore);
+        score.setText("Wynik : " + currentScore);
         updateQuestion(help);
 
         timer = (TextView) findViewById(R.id.timerView);
 
         checkHighScore();
         //  CDTimer.start();
+        timer.setText(String.valueOf(Counter));
 
+    }
+
+    private void loadmusic() {
+        mplayerGood = new MediaPlayer().create(getApplication(), R.raw.goodanswer);
+        mplayerWrong = new MediaPlayer().create(getApplication(), R.raw.wronganswer);
+    }
+
+    public void saveQuestion() {
+        SharedPreferences settings2 = getSharedPreferences("GAME_DATA2", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings2.edit();
+        editor.putInt("NUM_PYT", QuestionNumber);
+        editor.commit();
     }
 
     public void onClickListeners() {
         answer1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (equalsIgnoreCase(answer1.getText(), mAnswer)) {
+                if (equalsIgnoreCase(answer1.getText(), goodAnswer)) {
                     goodanswer();
                 } else {
                     playWrongSound();
@@ -232,7 +249,7 @@ public class MathActivity extends AppCompatActivity {
         answer2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (equalsIgnoreCase(answer2.getText(), mAnswer)) {
+                if (equalsIgnoreCase(answer2.getText(), goodAnswer)) {
                     goodanswer();
                 } else {
                     playWrongSound();
@@ -244,7 +261,7 @@ public class MathActivity extends AppCompatActivity {
         answer3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (equalsIgnoreCase(answer4.getText(), mAnswer)) {
+                if (equalsIgnoreCase(answer3.getText(), goodAnswer)) {
                     goodanswer();
                 } else {
                     playWrongSound();
@@ -256,7 +273,7 @@ public class MathActivity extends AppCompatActivity {
         answer4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (answer4.getText() == mAnswer) {
+                if (equalsIgnoreCase(answer4.getText(), goodAnswer)) {
                     goodanswer();
                 } else {
                     playWrongSound();
@@ -266,59 +283,44 @@ public class MathActivity extends AppCompatActivity {
         });
     }
 
-    public void saveQuestion() {
-        SharedPreferences settings2 = getSharedPreferences("GAME_DATA2", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings2.edit();
-        editor.putInt("NUM_PYT", QuestionNumber);
-        editor.commit();
-    }
-
     private void goodanswer() {
-        mScore = mScore + Counter;
+        currentScore = currentScore + Counter;
         checkHighScore();
         playCorrectSound();
-        score.setText("Wynik : " + mScore);
+        score.setText("Wynik : " + currentScore);
         Counter = 60;
-        loadQuestionData();
-        QuestionNumber = r.nextInt(mQuestionslenght);
-      /*  while (powtorki.contains(QuestionNumber))
-        {
-            QuestionNumber = r.nextInt(mQuestionslenght);
-        } */
+        QuestionNumber = r.nextInt(questionNumberCount);
+        while (powtorki.contains(QuestionNumber)) {
+            QuestionNumber = r.nextInt(questionNumberCount);
+        }
         updateQuestion(QuestionNumber);
-        //   powtorki.add(QuestionNumber);
+        powtorki.add(QuestionNumber);
         saveQuestion();
-      /*  if(powtorki.size() == mQuestions.contentQuestionsMath.length)
-        {
-            AlertDialog.Builder alertDialogBuilder = new    AlertDialog.Builder(MathActivity.this);
+        if (powtorki.size() == questionNumberCount) {
+            checkHighScore();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CustomCategoryActivity.this);
             alertDialogBuilder
-                    .setMessage("Koniec pytań, twój końcowy wynik to " + mScore + " punktów, gratulacje!")
+                    .setMessage("Koniec pytań, twój końcowy wynik to " + currentScore + " punktów, gratulacje!")
                     .setCancelable(false)
                     .setPositiveButton("NEW GAME",
                             new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i )
-                                {
-
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
                                     Intent intent = new Intent(getApplicationContext(), Start.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
-                                    finish();
-
                                 }
                             })
                     .setNegativeButton("EXIT",
-                            new DialogInterface.OnClickListener(){
+                            new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i)
-                                {
-
-
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
                                     Intent intent = new Intent(getApplicationContext(), Start.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     intent.putExtra("EXIT", true);
                                     startActivity(intent);
-                                    finish();
                                 }
                             });
             AlertDialog alertDialog = alertDialogBuilder.create();
@@ -326,42 +328,71 @@ public class MathActivity extends AppCompatActivity {
 
             Counter = -1;
             timer.setText("KONIEC GRY");
-        } */
+        }
     }
 
     private void loadQuestionData() {
         dbAdapter = new DbAdapter(getApplicationContext());
         dbAdapter.open();
-        getAllMathQuestions();
+        getAllCustomQuestions();
+        questionNumberCount = questions.size();
     }
 
-    private void getAllMathQuestions() {
+    private void getAllCustomQuestions() {
         questions = new ArrayList<QuestionDbo>();
-        MathCursor = getAllMathQuestionsFromDb();
+        cursor = getAllQuestionsFromDb(categoryName);
         //mapping questions
-        if (MathCursor != null && MathCursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
-                long id = MathCursor.getLong(HistoryTableConstants.ID_COLUMN);
-                String question = MathCursor.getString(HistoryTableConstants.QUESTION_COLUMN);
-                String answer1 = MathCursor.getString(HistoryTableConstants.ANSWER_1_COLUMN);
-                String answer2 = MathCursor.getString(HistoryTableConstants.ANSWER_2_COLUMN);
-                String answer3 = MathCursor.getString(HistoryTableConstants.ANSWER_3_COLUMN);
-                String answer4 = MathCursor.getString(HistoryTableConstants.ANSWER_4_COLUMN);
-                String correctAnswer = MathCursor.getString(HistoryTableConstants.KEY_CORRECT_COLUMN);
+                long id = cursor.getLong(HistoryTableConstants.ID_COLUMN);
+                String question = cursor.getString(HistoryTableConstants.QUESTION_COLUMN);
+                String answer1 = cursor.getString(HistoryTableConstants.ANSWER_1_COLUMN);
+                String answer2 = cursor.getString(HistoryTableConstants.ANSWER_2_COLUMN);
+                String answer3 = cursor.getString(HistoryTableConstants.ANSWER_3_COLUMN);
+                String answer4 = cursor.getString(HistoryTableConstants.ANSWER_4_COLUMN);
+                String correctAnswer = cursor.getString(HistoryTableConstants.KEY_CORRECT_COLUMN);
                 questions.add(new QuestionDbo(id, question, answer1, answer2, answer3, answer4, correctAnswer));
-            } while (MathCursor.moveToNext());
+            } while (cursor.moveToNext());
         }
     }
 
-    private Cursor getAllMathQuestionsFromDb() {
-        MathCursor = dbAdapter.getAllMathQuestions();
-        if (MathCursor != null) {
-            startManagingCursor(MathCursor);
-            MathCursor.moveToFirst();
+    private Cursor getAllQuestionsFromDb(String categoryName) {
+        cursor = dbAdapter.getAllCustomQuestions(categoryName);
+        if (cursor != null) {
+            startManagingCursor(cursor);
+            cursor.moveToFirst();
         }
-        return MathCursor;
+        return cursor;
+    }
+
+    private void checkIfCategoryContainsQuestions(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CustomCategoryActivity.this);
+        alertDialogBuilder
+                .setMessage("Twoja kategoria nie ma pytań!")
+                .setCancelable(false)
+                .setPositiveButton("Dodaj Pytania",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(getApplicationContext(), AddNewQuestionActivity.class);
+                                intent.putExtra("categoryName", getIntent().getStringExtra("categoryName"));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                finish();
+                                startActivity(intent);
+                            }
+                        })
+                .setNegativeButton("Wróć do menu", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getApplicationContext(), TopicList.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("EXIT", true);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }
-
-
 

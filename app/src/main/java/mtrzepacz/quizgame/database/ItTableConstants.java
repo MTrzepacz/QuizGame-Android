@@ -2,7 +2,7 @@ package mtrzepacz.quizgame.database;
 
 public class ItTableConstants {
 
-    public static final String DB_IT_TABLE = "It";
+    public static final String DB_IT_TABLE = "Informatyka";
     public static final String IT_KEY_ID = "_id";
     public static final String IT_KEY_ID_OPTIONS = "INTEGER PRIMARY KEY AUTOINCREMENT";
     public static final int ID_COLUMN = 0;

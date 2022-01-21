@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/neo_menu"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListView
@@ -20,30 +21,39 @@
 
     <Button
         android:id="@+id/addNewItemButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" Add new Category"
+        android:layout_width="178dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/customquizbutton"
+        android:text="Nowa Kategoria"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintEnd_toStartOf="@+id/topicNameEditText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ListView1" />
+        app:layout_constraintTop_toBottomOf="@+id/ListView1"
+        app:layout_constraintVertical_bias="0.562" />
 
     <EditText
         android:id="@+id/topicNameEditText"
-        android:layout_width="151dp"
-        android:layout_height="38dp"
+        android:layout_width="173dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
+        android:layout_marginBottom="32dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="topic name"
+        android:text="nazwa"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/addNewItemButton"
         app:layout_constraintTop_toBottomOf="@+id/ListView1"
-        app:layout_constraintVertical_bias="0.578" />
+        app:layout_constraintVertical_bias="0.551" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
