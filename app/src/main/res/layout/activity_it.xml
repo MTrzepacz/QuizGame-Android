@@ -7,121 +7,122 @@
     android:background="@drawable/neo_infa"
 
     tools:context="mtrzepacz.quizgame.ITActivity">
+
     <Button
-        android:background="@drawable/customquizbutton"
         android:id="@+id/answer3"
-        android:textSize="10dp"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="52dp"
-        android:layout_marginLeft="38dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/customquizbutton"
         android:text="Button"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:textColor="#FFFFFF"
         android:id="@+id/QuestionView"
-        android:textSize="18dp"
-        android:textAlignment="center"
-        android:layout_width="309dp"
-        android:layout_height="112dp"
-        android:layout_marginRight="25dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
         android:layout_marginLeft="25dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="25dp"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        android:layout_marginTop="34dp"
-        app:layout_constraintTop_toBottomOf="@+id/score"
-        android:gravity="center_horizontal" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score" />
 
     <Button
-        android:background="@drawable/customquizbutton"
         android:id="@+id/answer2"
         android:layout_width="120dp"
-        android:textSize="10dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="42dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="28dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/customquizbutton"
         android:text="Button"
+        android:textSize="10dp"
         app:layout_constraintBottom_toTopOf="@+id/answer4"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.324"
         app:layout_constraintLeft_toRightOf="@+id/answer1"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:background="@drawable/customquizbutton"
         android:id="@+id/answer4"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="52dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="28dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/customquizbutton"
         android:text="Button"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.324"
         app:layout_constraintLeft_toRightOf="@+id/answer3"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:background="@drawable/customquizbutton"
         android:id="@+id/answer1"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="42dp"
-        android:layout_marginLeft="38dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/customquizbutton"
         android:text="Button"
         android:textSize="10dp"
         app:layout_constraintBottom_toTopOf="@+id/answer3"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:textColor="#FFFFFF"
-        android:textSize="20dp"
         android:id="@+id/score"
-        android:textAlignment="center"
-        android:layout_width="295dp"
-        android:layout_height="39dp"
-        android:visibility="visible"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="24dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="24dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/BestScoreView"
-        android:gravity="center_horizontal" />
-
-    <TextView
-        android:textColor="#FFFFFF"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:id="@+id/timerView"
-        android:layout_width="294dp"
-        android:layout_height="27dp"
-        android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:visibility="visible"
+        app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center_horizontal" />
+        app:layout_constraintTop_toBottomOf="@+id/BestScoreView" />
 
     <TextView
+        android:id="@+id/timerView"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="24dp"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/BestScoreView"
-        android:layout_width="298dp"
+        android:layout_width="300dp"
         android:layout_height="31dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="24dp"
+        android:gravity="center_horizontal"
         android:textAlignment="center"
-        app:layout_constraintHorizontal_bias="0.574"
+        android:textColor="#FFFFFF"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerView"
-        android:gravity="center_horizontal" />
+        app:layout_constraintTop_toBottomOf="@+id/timerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

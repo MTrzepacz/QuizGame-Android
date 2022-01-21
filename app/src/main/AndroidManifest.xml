@@ -45,6 +45,7 @@
         </activity>
         <activity
             android:name=".TopicList"
+            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".Start">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -54,6 +55,7 @@
         </activity>
         <activity
             android:name=".PlayOrAddNewQuestionActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".TopicList">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -63,6 +65,7 @@
         </activity>
         <activity
             android:name=".AddNewQuestionActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".PlayOrAddNewQuestionActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -72,6 +75,7 @@
         </activity>
         <activity
             android:name=".CustomCategoryActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".PlayOrAddNewQuestionActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
