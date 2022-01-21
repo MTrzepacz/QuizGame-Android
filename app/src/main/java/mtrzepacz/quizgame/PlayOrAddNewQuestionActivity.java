@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,18 +49,18 @@ public class PlayOrAddNewQuestionActivity extends AppCompatActivity {
     }
 
     private void pickPlayCategory(String categoryName) {
-        if(equalsIgnoreCase(categoryName, "Matematyka")){
+        if (equalsIgnoreCase(categoryName, "Matematyka")) {
             Intent intent = new Intent(getApplicationContext(), MathActivity.class);
             startActivity(intent);
         } else if (equalsIgnoreCase(categoryName, "Historia")) {
             Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
             startActivity(intent);
-        } else if (equalsIgnoreCase(categoryName, "Informatyka")){
+        } else if (equalsIgnoreCase(categoryName, "Informatyka")) {
             Intent intent = new Intent(getApplicationContext(), ITActivity.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(getApplicationContext(), CustomCategoryActivity.class);
-            intent.putExtra("categoryName",categoryName);
+            intent.putExtra("categoryName", categoryName);
             startActivity(intent);
         }
     }

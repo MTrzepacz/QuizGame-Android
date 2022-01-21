@@ -63,6 +63,7 @@ public class CustomCategoryActivity extends AppCompatActivity {
                 onFinish();
             }
         }
+
         public void onFinish() {
             timer.setText(" KONIEC CZASU ");
             cancel();
@@ -87,7 +88,6 @@ public class CustomCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //todo set layout for custom activity
         setContentView(R.layout.custom_category);
 
         Intent contentIntent = getIntent();
@@ -96,9 +96,7 @@ public class CustomCategoryActivity extends AppCompatActivity {
 
         loadmusic();
         loadQuestionData();
-       // checkIfCategoryContainsQuestions();
-
-        if(questionNumberCount <= 0){
+        if (questionNumberCount <= 0) {
             checkIfCategoryContainsQuestions();
         } else {
             r = new Random();
@@ -163,12 +161,6 @@ public class CustomCategoryActivity extends AppCompatActivity {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 finish();
                                 System.gc();
-                                //  onDestroy();
-
-
-                                //   startActivity(intent);
-
-                                // startActivity(new Intent(getApplicationContext(),Start.class));
                             }
                         })
                 .setNegativeButton("EXIT",
@@ -182,7 +174,6 @@ public class CustomCategoryActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
-        // playWrongSound();
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
         Counter = -1;
@@ -216,7 +207,6 @@ public class CustomCategoryActivity extends AppCompatActivity {
         timer = (TextView) findViewById(R.id.timerView);
 
         checkHighScore();
-        //  CDTimer.start();
         timer.setText(String.valueOf(Counter));
 
     }
@@ -365,7 +355,7 @@ public class CustomCategoryActivity extends AppCompatActivity {
         return cursor;
     }
 
-    private void checkIfCategoryContainsQuestions(){
+    private void checkIfCategoryContainsQuestions() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CustomCategoryActivity.this);
         alertDialogBuilder
                 .setMessage("Twoja kategoria nie ma pytań!")

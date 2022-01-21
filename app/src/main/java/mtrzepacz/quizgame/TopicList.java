@@ -50,7 +50,7 @@ public class TopicList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String string = (String) listView.getItemAtPosition(position);
                 Intent intent = new Intent(getApplicationContext(), PlayOrAddNewQuestionActivity.class);
-                intent.putExtra("categoryName",string);
+                intent.putExtra("categoryName", string);
                 startActivity(intent);
             }
         });
@@ -81,7 +81,7 @@ public class TopicList extends AppCompatActivity {
             do {
                 //long id = topicCursor.getLong(StartingTopicsConstants.ID_COLUMN);
                 String name = topicCursor.getString(StartingTopicsConstants.TOPIC_NAME_COLUMN);
-                if (StringUtils.isNotBlank(name)){
+                if (StringUtils.isNotBlank(name)) {
                     testList.add(name);
                 }
 

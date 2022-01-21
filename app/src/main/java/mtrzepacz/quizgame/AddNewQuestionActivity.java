@@ -17,7 +17,7 @@ import mtrzepacz.quizgame.database.QuestionDbo;
 
 public class AddNewQuestionActivity extends AppCompatActivity {
 
-    EditText question, answer1,answer2,answer3,answer4,correctAnswer;
+    EditText question, answer1, answer2, answer3, answer4, correctAnswer;
     Button resetButton, addNewQuestionButton;
 
     DbAdapter dbAdapter;
@@ -63,13 +63,13 @@ public class AddNewQuestionActivity extends AppCompatActivity {
                         answer2.getText().toString(),
                         answer3.getText().toString(),
                         answer4.getText().toString(),
-                        StringUtils.stripEnd(correctAnswer.getText().toString(),""));
+                        StringUtils.stripEnd(correctAnswer.getText().toString(), ""));
 
                 Intent contentIntent = getIntent();
 
-                dbAdapter.addCustomQuestion(contentIntent.getStringExtra("categoryName"),dbo);
+                dbAdapter.addCustomQuestion(contentIntent.getStringExtra("categoryName"), dbo);
 
-                Toast.makeText(getApplicationContext(),"Pytanie dodane",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Pytanie dodane", Toast.LENGTH_SHORT).show();
             }
         });
     }

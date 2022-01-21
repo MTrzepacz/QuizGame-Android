@@ -20,8 +20,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import mtrzepacz.quizgame.database.DbAdapter;
 import mtrzepacz.quizgame.database.HistoryTableConstants;
@@ -36,7 +38,7 @@ public class MathActivity extends AppCompatActivity {
 
     private MathQuestions mQuestions = new MathQuestions();
 
-    //  Set<Integer> powtorki = new HashSet<>();
+    Set<Integer> powtorki = new HashSet<>();
     private int mScore = 0;
     private String mAnswer;
     private int Counter = 60;
@@ -95,7 +97,6 @@ public class MathActivity extends AppCompatActivity {
         loadmusic();
         loadQuestionData();
         QuestionNumber = r.nextInt(mQuestionslenght);
-        //powtorki.add(QuestionNumber);
         answer1 = (Button) findViewById(R.id.answer1);
         answer2 = (Button) findViewById(R.id.answer2);
         answer3 = (Button) findViewById(R.id.answer3);
@@ -281,44 +282,38 @@ public class MathActivity extends AppCompatActivity {
         Counter = 60;
         loadQuestionData();
         QuestionNumber = r.nextInt(mQuestionslenght);
-      /*  while (powtorki.contains(QuestionNumber))
-        {
+        while (powtorki.contains(QuestionNumber)) {
             QuestionNumber = r.nextInt(mQuestionslenght);
-        } */
+        }
         updateQuestion(QuestionNumber);
-        //   powtorki.add(QuestionNumber);
+        powtorki.add(QuestionNumber);
         saveQuestion();
-      /*  if(powtorki.size() == mQuestions.contentQuestionsMath.length)
-        {
-            AlertDialog.Builder alertDialogBuilder = new    AlertDialog.Builder(MathActivity.this);
+        if (powtorki.size() == questions.size()) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MathActivity.this);
             alertDialogBuilder
                     .setMessage("Koniec pytań, twój końcowy wynik to " + mScore + " punktów, gratulacje!")
                     .setCancelable(false)
                     .setPositiveButton("NEW GAME",
                             new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i )
-                                {
-
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
                                     Intent intent = new Intent(getApplicationContext(), Start.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
-                                    finish();
-
                                 }
                             })
                     .setNegativeButton("EXIT",
-                            new DialogInterface.OnClickListener(){
+                            new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i)
-                                {
+                                public void onClick(DialogInterface dialogInterface, int i) {
 
-
+                                    finish();
                                     Intent intent = new Intent(getApplicationContext(), Start.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     intent.putExtra("EXIT", true);
                                     startActivity(intent);
-                                    finish();
+
                                 }
                             });
             AlertDialog alertDialog = alertDialogBuilder.create();
@@ -326,7 +321,7 @@ public class MathActivity extends AppCompatActivity {
 
             Counter = -1;
             timer.setText("KONIEC GRY");
-        } */
+        }
     }
 
     private void loadQuestionData() {

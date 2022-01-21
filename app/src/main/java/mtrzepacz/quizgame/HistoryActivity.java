@@ -118,12 +118,13 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy(){
-        if(dbAdapter != null){
+    protected void onDestroy() {
+        if (dbAdapter != null) {
             dbAdapter.close();
         }
         super.onDestroy();
     }
+
     private void updateQuestion(int num) {
         questionView.setText(questions.get(num).getQuestion());
         answer1.setText(questions.get(num).getAnswer1());
@@ -159,9 +160,9 @@ public class HistoryActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Intent intent = new Intent(getApplicationContext(), Start.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
                                 finish();
-                                // startActivity(new Intent(getApplicationContext(),Start.class));
+                                startActivity(intent);
+
                             }
                         })
                 .setNegativeButton("EXIT",

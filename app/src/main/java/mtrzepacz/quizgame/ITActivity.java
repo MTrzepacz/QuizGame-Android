@@ -281,7 +281,7 @@ public class ITActivity extends AppCompatActivity {
         updateQuestion(QuestionNumber);
         powtorki.add(QuestionNumber);
         saveQuestion();
-        if (powtorki.size() == mQuestions.contentQuestionsIT.length) {
+        if (powtorki.size() == questions.size()) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ITActivity.this);
             alertDialogBuilder
                     .setMessage("Koniec pytań, twój końcowy wynik to " + mScore + " punktów, gratulacje!")
